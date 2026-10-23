@@ -23,3 +23,6 @@ class DossierTests(unittest.TestCase):
     def test_missing_id_skipped(self):
         item = {'url':'https://example.org/a','title':'La cifra aumentó 25 % en 2025','state':'candidate_unverified','publishable':False}
         self.assertEqual(build_dossiers({'items':[item]})['dossiers'], [])
+
+    def test_non_list_items_are_ignored(self):
+        self.assertEqual(build_dossiers({'items':{'bad':'data'}})['dossiers'], [])
