@@ -30,6 +30,8 @@ jobs:
         run: python -m src.report
       - name: Preparar guion de voz sin sintetizar
         run: python -m src.voice
+      - name: Auditar bloqueo editorial de todos los artefactos
+        run: python -m src.safety_audit
       - name: Generar vídeo diagnóstico sin narración
         run: python -m src.video
       - name: Instalar sintetizador de voz experimental
