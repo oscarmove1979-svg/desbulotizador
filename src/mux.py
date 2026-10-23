@@ -17,6 +17,7 @@ def add_voice(video="output/preview.mp4", audio="output/voice.mp3",
     duration = float(json.loads(probe.stdout)["format"]["duration"])
     if not 0.5 <= duration <= 120:
         raise ValueError("Duración de voz no permitida")
+    Path(output).parent.mkdir(parents=True, exist_ok=True)
     subprocess.run(
         ["ffmpeg", "-y", "-stream_loop", "-1", "-i", video, "-i", audio,
          "-map", "0:v:0", "-map", "1:a:0",
