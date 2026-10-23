@@ -17,7 +17,7 @@ def build_dossiers(queue):
             "source_classification": classify_source(item["url"]),
             "source_title": item["title"],
             "claims": claims,
-            "evidence_matrices": [assemble_matrix(claim, []) for claim in claims],
+            "evidence_matrices": [assemble_matrix(claim['text'], []) for claim in claims],
             "review_status": "awaiting_primary_sources",
             "verdict": None,
             "publication_allowed": False
