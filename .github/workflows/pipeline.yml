@@ -30,6 +30,8 @@ jobs:
         run: python -m src.report
       - name: Generar vídeo diagnóstico sin narración
         run: python -m src.video
+      - name: Validar MP4 generado
+        run: python -m src.quality_gate
       - name: Guardar resultados
         uses: actions/upload-artifact@v4
         with:
@@ -39,5 +41,6 @@ jobs:
             output/queue.json
             output/dossiers.json
             output/preview.mp4
+            output/video_quality.json
             output/report.json
           retention-days: 7
