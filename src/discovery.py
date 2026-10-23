@@ -30,6 +30,15 @@ def fetch_feed(url, timeout=12):
         link = (item.findtext("link") or "").strip()
         if title and link.startswith("https://"):
             items.append({"title": title, "url": link, "feed": url})
+    atom = "{http://www.w3.org/2005/Atom}"
+    for entry in root.findall(f".//{atom}entry")[:20]:
+        title = (entry.findtext(f"{atom}title") or "").strip()
+        links = entry.findall(f"{atom}link")
+        link = next((node.get("href", "") for node in links
+                     if node.get("rel", "alternate") == "alternate"
+                     and urlsplit(node.get("href", "")).scheme == "https"), "")
+        if title and link:
+            items.append({"title": title, "url": link, "feed": url})
     return items
 
 def discover(feeds=None):
