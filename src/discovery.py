@@ -23,6 +23,8 @@ def fetch_feed(url, timeout=12):
         data = response.read(2_000_001)
         if len(data) > 2_000_000:
             raise ValueError("RSS demasiado grande")
+    if b"<!DOCTYPE" in data.upper() or b"<!ENTITY" in data.upper():
+        raise ValueError("XML con entidades no permitido")
     root = ET.fromstring(data)
     items = []
     for item in root.findall(".//item")[:20]:
