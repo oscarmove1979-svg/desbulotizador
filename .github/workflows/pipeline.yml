@@ -44,8 +44,15 @@ jobs:
       - name: Registrar métricas del proceso
         run: python -m src.metrics
       - name: Resumir resultados en GitHub Actions
-        run: python -m src.pipeline_summary
+        if: always()
+        run: |
+          if [ -f output/voice_status.json ] && [ -f output/video_quality.json ] && [ -f output/metrics.json ]; then
+            python -m src.pipeline_summary
+          else
+            echo "Pipeline incompleto: faltan artefactos para el resumen" >> "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Guardar resultados
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: pipeline-sin-publicacion
