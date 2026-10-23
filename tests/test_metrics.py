@@ -8,3 +8,11 @@ class MetricsTests(unittest.TestCase):
         self.assertEqual(r["candidate_count"], 1)
         self.assertEqual(r["verified_bulos"], 0)
         self.assertFalse(r["publication_allowed"])
+
+    def test_counts_pending_claims_and_evidence(self):
+        dossiers = {"dossiers": [{"claims": [{"text": "dato 2025"}],
+            "evidence_matrices": [{"evidence": [{"url": "https://example.org"}]}]}]}
+        result = summarize({"candidates": [], "errors": []}, {"items": []}, dossiers)
+        self.assertEqual(result["claims_pending_review"], 1)
+        self.assertEqual(result["evidence_records"], 1)
+        self.assertEqual(result["verified_bulos"], 0)
