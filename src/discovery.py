@@ -2,6 +2,7 @@
 import json
 import os
 import urllib.request
+from urllib.parse import urlsplit
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from pathlib import Path
@@ -11,11 +12,17 @@ DEFAULT_FEEDS = [
 ]
 
 def fetch_feed(url, timeout=12):
-    if not url.startswith("https://"):
-        raise ValueError("HTTPS requerido")
+    parsed = urlsplit(url)
+    if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+        raise ValueError("URL HTTPS válida requerida")
     req = urllib.request.Request(url, headers={"User-Agent": "desBULOtizador/0.1 (research prototype)"})
     with urllib.request.urlopen(req, timeout=timeout) as response:
-        data = response.read(2_000_000)
+        final = urlsplit(response.geturl()) if hasattr(response, "geturl") else parsed
+        if final.scheme != "https":
+            raise ValueError("Redirección fuera de HTTPS")
+        data = response.read(2_000_001)
+        if len(data) > 2_000_000:
+            raise ValueError("RSS demasiado grande")
     root = ET.fromstring(data)
     items = []
     for item in root.findall(".//item")[:20]:
