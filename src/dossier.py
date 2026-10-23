@@ -10,6 +10,8 @@ def build_dossiers(queue):
     for item in queue.get("items", []):
         if not isinstance(item, dict) or item.get("publishable") is not False or item.get("state") != "candidate_unverified":
             continue
+        if not isinstance(item.get("id"), str) or not isinstance(item.get("url"), str):
+            continue
         claims = extract_claims(item.get("title", ""))
         if not claims:
             continue
