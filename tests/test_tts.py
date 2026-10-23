@@ -11,3 +11,10 @@ class TTSTests(unittest.IsolatedAsyncioTestCase):
             p.write_text(json.dumps({"public_upload_allowed": True, "script": "hola"}))
             with self.assertRaises(ValueError):
                 await synthesize(str(p), str(Path(d) / "voice.mp3"))
+
+    async def test_empty_script_rejected_before_import(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / "plan.json"
+            p.write_text(json.dumps({"public_upload_allowed": False, "script": ""}))
+            with self.assertRaises(ValueError):
+                await synthesize(str(p), str(Path(d) / "voice.mp3"))
