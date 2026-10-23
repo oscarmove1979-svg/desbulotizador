@@ -19,3 +19,7 @@ class DossierTests(unittest.TestCase):
     def test_publishable_candidate_is_not_processed(self):
         item = {'id':'x','url':'https://example.org','title':'La cifra creció 25 % en 2025','state':'candidate_unverified','publishable':True}
         self.assertEqual(build_dossiers({'items':[item]})['dossiers'], [])
+
+    def test_missing_id_skipped(self):
+        item = {'url':'https://example.org/a','title':'La cifra aumentó 25 % en 2025','state':'candidate_unverified','publishable':False}
+        self.assertEqual(build_dossiers({'items':[item]})['dossiers'], [])
