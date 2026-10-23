@@ -26,6 +26,8 @@ async def run():
         status["editorial_approval"] = False
     except Exception as exc:
         status["voice_status"] = "failed"
+        status["narrated_video_valid"] = False
+        status["editorial_approval"] = False
         status["error_type"] = type(exc).__name__
         status["error_message"] = str(exc)[:300]
         for partial in ("output/preview_narrated.mp4", "output/voice.mp3"):
