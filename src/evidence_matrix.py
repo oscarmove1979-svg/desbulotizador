@@ -12,7 +12,7 @@ def assemble_matrix(claim, sources):
     for source in sources:
         if not isinstance(source, dict):
             continue
-        url = str(source.get("url", ""))
+        url = str(source.get("url", "")).strip()
         parsed = urlsplit(url)
         if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
             continue
