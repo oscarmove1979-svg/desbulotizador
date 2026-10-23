@@ -9,7 +9,12 @@ def validate_artifacts(dossiers, voice, report):
         raise ValueError("Voice publication flag must be false")
     if report.get("publication_allowed") is not False:
         raise ValueError("Report publication flag must be false")
-    for case in dossiers.get("dossiers", []):
+    cases = dossiers.get("dossiers", [])
+    if not isinstance(cases, list):
+        raise ValueError("Dossiers must be a list")
+    for case in cases:
+        if not isinstance(case, dict):
+            raise ValueError("Dossier must be an object")
         if case.get("publication_allowed") is not False:
             raise ValueError("Case publication flag must be false")
         if case.get("verdict") is not None:
