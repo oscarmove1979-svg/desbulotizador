@@ -14,7 +14,7 @@ async def synthesize(plan_path="output/voice_plan.json", audio_path="output/voic
     destination = Path(audio_path)
     destination.parent.mkdir(parents=True, exist_ok=True)
     await edge_tts.Communicate(script, "es-ES-AlvaroNeural").save(str(destination))
-    if destination.stat().st_size < 1000:
+    if not destination.exists() or destination.stat().st_size < 1000:
         raise RuntimeError("Audio vacío")
     return str(destination)
 
