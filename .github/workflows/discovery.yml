@@ -1,0 +1,25 @@
+name: Descubrimiento RSS seguro
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '43 9 * * *'
+permissions:
+  contents: read
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Probar módulos
+        run: python -m unittest discover -s tests -v
+      - name: Recoger candidatos RSS sin etiquetar como bulos
+        run: python -m src.discovery
+      - uses: actions/upload-artifact@v4
+        with:
+          name: candidatos-rss
+          path: output/discovery.json
+          retention-days: 7
