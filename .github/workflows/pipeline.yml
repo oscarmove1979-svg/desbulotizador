@@ -1,0 +1,35 @@
+name: Canalización automática sin publicación
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '13 10 * * *'
+permissions:
+  contents: read
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Ejecutar pruebas
+        run: python -m unittest discover -s tests -v
+      - name: Recoger candidatos
+        run: python -m src.discovery
+      - name: Construir cola
+        run: python -m src.queue
+      - name: Generar informe bloqueado
+        run: python -m src.report
+      - name: Guardar resultados
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-sin-publicacion
+          path: |
+            output/discovery.json
+            output/queue.json
+            output/report.json
+          retention-days: 7
