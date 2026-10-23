@@ -24,4 +24,5 @@ class MuxIntegrationTests(unittest.TestCase):
             add_voice(str(video), str(audio), str(output))
             checked = inspect_video(output, require_audio=True)
             self.assertGreaterEqual(checked["duration_seconds"], 16)
+            self.assertLess(checked["duration_seconds"], 19)
             self.assertFalse(checked["public_upload_allowed"])
