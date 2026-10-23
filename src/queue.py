@@ -5,6 +5,8 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 def normalize(candidate):
+    if not isinstance(candidate, dict):
+        return None
     url = str(candidate.get("url", "")).strip()
     title = str(candidate.get("title", "")).strip()
     parsed = urlsplit(url)
