@@ -11,3 +11,8 @@ class QueueTests(unittest.TestCase):
         self.assertEqual(build_queue({"candidates": [{"title": "X", "url": "http://invalid"}]})["items"], [])
     def test_empty(self):
         self.assertEqual(build_queue({})["items"], [])
+
+    def test_malformed_candidate_is_ignored(self):
+        q = build_queue({'candidates':[None, 42, {'title':'Valid','url':'https://example.org/ok'}]})
+        self.assertEqual(len(q['items']), 1)
+        self.assertFalse(q['publication_enabled'])
