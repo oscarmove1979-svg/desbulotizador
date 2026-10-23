@@ -34,6 +34,9 @@ class DiscoveryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             fetch_feed("https://example.org/feed")
 
+    def test_explicit_empty_feed_list(self):
+        self.assertEqual(discover([])["candidates"], [])
+
     def test_no_http(self):
         with self.assertRaises(ValueError):
             fetch_feed("http://example.org/feed")
