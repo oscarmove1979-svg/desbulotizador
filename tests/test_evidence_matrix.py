@@ -14,3 +14,11 @@ class EvidenceMatrixTests(unittest.TestCase):
     def test_empty_claim_rejected(self):
         with self.assertRaises(ValueError):
             assemble_matrix("  ", [])
+
+    def test_url_whitespace_deduplicated(self):
+        matrix = assemble_matrix('Cifra 2025', [{'url':' https://example.org/a '}, {'url':'https://example.org/a'}])
+        self.assertEqual(len(matrix['evidence']), 1)
+
+    def test_sources_must_be_list(self):
+        with self.assertRaises(TypeError):
+            assemble_matrix('Cifra 2025', None)
