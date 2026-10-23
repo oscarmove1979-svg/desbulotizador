@@ -32,11 +32,10 @@ jobs:
         run: python -m src.voice
       - name: Generar vídeo diagnóstico sin narración
         run: python -m src.video
-      - name: Probar narración neural gratuita (experimental)
-        continue-on-error: true
-        run: |
-          python -m pip install edge-tts
-          python -m src.voice_job
+      - name: Instalar sintetizador de voz experimental
+        run: python -m pip install edge-tts
+      - name: Probar narración neural y registrar resultado
+        run: python -m src.voice_job
       - name: Validar MP4 generado
         run: python -m src.quality_gate
       - name: Registrar métricas del proceso
