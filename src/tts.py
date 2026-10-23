@@ -19,6 +19,7 @@ async def synthesize(plan_path="output/voice_plan.json", audio_path="output/voic
         destination.unlink(missing_ok=True)
         raise
     if not destination.exists() or destination.stat().st_size < 1000:
+        destination.unlink(missing_ok=True)
         raise RuntimeError("Audio vacío")
     return str(destination)
 
