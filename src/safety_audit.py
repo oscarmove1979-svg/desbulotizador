@@ -14,6 +14,9 @@ def validate_artifacts(dossiers, voice, report):
             raise ValueError("Case publication flag must be false")
         if case.get("verdict") is not None:
             raise ValueError("Automated verdict not permitted")
+        for claim in case.get("claims", []):
+            if claim.get("publishable") is not False or claim.get("verdict") != "unverified":
+                raise ValueError("Candidate claims must remain unverified")
         for matrix in case.get("evidence_matrices", []):
             if matrix.get("publication_allowed") is not False or matrix.get("verdict") is not None:
                 raise ValueError("Evidence matrix must remain unverified")
