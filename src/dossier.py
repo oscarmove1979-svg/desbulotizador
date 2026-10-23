@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 from src.claim_extraction import extract_claims
+from src.source_registry import classify_source
 
 def build_dossiers(queue):
     dossiers = []
@@ -12,6 +13,7 @@ def build_dossiers(queue):
         dossiers.append({
             "id": item["id"],
             "source_url": item["url"],
+            "source_classification": classify_source(item["url"]),
             "source_title": item["title"],
             "claims": claims,
             "review_status": "awaiting_primary_sources",
