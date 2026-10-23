@@ -13,7 +13,8 @@ PRIMARY_SOURCE_DOMAINS = {
 
 def classify_source(url):
     parsed = urlsplit(url) if isinstance(url, str) else None
-    if not parsed or parsed.scheme != "https" or not parsed.hostname:
+    if (not parsed or parsed.scheme != "https" or not parsed.hostname
+            or parsed.username or parsed.password):
         return {"kind": "unknown", "authority": None, "fact_verified": False}
     host = parsed.hostname.lower().removeprefix("www.")
     for domain, authority in PRIMARY_SOURCE_DOMAINS.items():
