@@ -13,7 +13,11 @@ async def synthesize(plan_path="output/voice_plan.json", audio_path="output/voic
     import edge_tts
     destination = Path(audio_path)
     destination.parent.mkdir(parents=True, exist_ok=True)
-    await edge_tts.Communicate(script, "es-ES-AlvaroNeural").save(str(destination))
+    try:
+        await edge_tts.Communicate(script, "es-ES-AlvaroNeural").save(str(destination))
+    except Exception:
+        destination.unlink(missing_ok=True)
+        raise
     if not destination.exists() or destination.stat().st_size < 1000:
         raise RuntimeError("Audio vacío")
     return str(destination)
