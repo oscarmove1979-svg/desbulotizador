@@ -17,7 +17,7 @@ async def run():
         add_voice()
         checked = inspect_video("output/preview_narrated.mp4", require_audio=True)
         status["narrated_video_valid"] = checked["technical_pass"]
-        status["voice_status"] = "success"
+        status["voice_status"] = "success" if checked["technical_pass"] else "failed"
         status["duration_seconds"] = checked["duration_seconds"]
     except Exception as exc:
         status["voice_status"] = "failed"
