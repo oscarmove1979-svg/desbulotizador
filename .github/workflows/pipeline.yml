@@ -40,6 +40,8 @@ jobs:
         run: python -m src.quality_gate
       - name: Registrar métricas del proceso
         run: python -m src.metrics
+      - name: Resumir resultados en GitHub Actions
+        run: python -m src.pipeline_summary
       - name: Guardar resultados
         uses: actions/upload-artifact@v4
         with:
@@ -55,5 +57,6 @@ jobs:
             output/video_quality.json
             output/voice_plan.json
             output/metrics.json
+            output/pipeline_summary.json
             output/report.json
           retention-days: 7
