@@ -8,6 +8,8 @@ from src.evidence_matrix import assemble_matrix
 def build_dossiers(queue):
     dossiers = []
     for item in queue.get("items", []):
+        if not isinstance(item, dict) or item.get("publishable") is not False or item.get("state") != "candidate_unverified":
+            continue
         claims = extract_claims(item.get("title", ""))
         if not claims:
             continue
