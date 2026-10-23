@@ -8,6 +8,9 @@ class DossierTests(unittest.TestCase):
         d = build_dossiers(q)
         self.assertEqual(len(d["dossiers"]), 1)
         self.assertIsNone(d["dossiers"][0]["verdict"])
+        matrix = d["dossiers"][0]["evidence_matrices"][0]
+        self.assertEqual(matrix["claim"], d["dossiers"][0]["claims"][0]["text"])
+        self.assertIsNone(matrix["verdict"])
         self.assertFalse(d["dossiers"][0]["publication_allowed"])
     def test_no_numeric_claim(self):
         self.assertEqual(build_dossiers({"items": []})["dossiers"], [])
