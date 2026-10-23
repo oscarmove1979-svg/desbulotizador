@@ -16,3 +16,6 @@ class QueueTests(unittest.TestCase):
         q = build_queue({'candidates':[None, 42, {'title':'Valid','url':'https://example.org/ok'}]})
         self.assertEqual(len(q['items']), 1)
         self.assertFalse(q['publication_enabled'])
+
+    def test_non_list_candidates(self):
+        self.assertEqual(build_queue({'candidates':{'bad':'format'}})['items'], [])
