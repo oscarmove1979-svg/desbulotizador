@@ -21,6 +21,8 @@ def validate_artifacts(dossiers, voice, report):
             raise ValueError("Automated verdict not permitted")
         claims = case.get("claims", [])
         matrices = case.get("evidence_matrices", [])
+        if not isinstance(claims, list) or not isinstance(matrices, list):
+            raise ValueError("Invalid claim or matrix list")
         if len(claims) != len(matrices):
             raise ValueError("Every claim requires one evidence matrix")
         for claim in claims:
