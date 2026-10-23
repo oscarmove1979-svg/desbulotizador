@@ -47,7 +47,7 @@ def fetch_feed(url, timeout=12):
 def discover(feeds=None):
     result = {"generated_at": datetime.now(timezone.utc).isoformat(), "candidates": [], "errors": [],
               "note": "Candidatos informativos, NO bulos verificados."}
-    for url in (feeds or DEFAULT_FEEDS):
+    for url in (DEFAULT_FEEDS if feeds is None else feeds):
         try:
             result["candidates"].extend(fetch_feed(url))
         except Exception as exc:
