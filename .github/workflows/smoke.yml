@@ -1,0 +1,20 @@
+name: Prueba inicial desBULOtizador
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verificar entorno
+        run: |
+          python3 --version
+          ffmpeg -version | head -n 1
+          python3 - <<'PY'
+          from pathlib import Path
+          assert Path('README.md').exists()
+          print('desBULOtizador: entorno cloud listo; publicación desactivada')
+          PY
