@@ -13,7 +13,7 @@ def create_preview(dossiers_path="output/dossiers.json", destination="output/pre
     output = Path(destination)
     output.parent.mkdir(parents=True, exist_ok=True)
     cmd = ["ffmpeg", "-y", "-f", "lavfi", "-i",
-           "color=c=0x101820:s=720x1280:r=25:d=4",
+           "color=c=0x101820:s=720x1280:r=25:d=14",
            "-vf", "drawbox=x=35:y=80:w=650:h=210:color=0x293747:t=fill,"
                   "drawtext=text='desBULOtizador':fontsize=48:fontcolor=white:x=65:y=120,"
                   "drawtext=text='PROTOTIPO - SIN VEREDICTO':fontsize=29:fontcolor=yellow:x=65:y=215,"
