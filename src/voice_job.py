@@ -23,6 +23,8 @@ async def run():
         status["voice_status"] = "failed"
         status["error_type"] = type(exc).__name__
         status["error_message"] = str(exc)[:300]
+        for partial in ("output/preview_narrated.mp4", "output/voice.mp3"):
+            Path(partial).unlink(missing_ok=True)
     finally:
         Path("output").mkdir(exist_ok=True)
         Path("output/voice_status.json").write_text(
