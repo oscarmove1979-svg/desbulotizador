@@ -18,7 +18,7 @@ def fetch_feed(url, timeout=12):
     req = urllib.request.Request(url, headers={"User-Agent": "desBULOtizador/0.1 (research prototype)"})
     with urllib.request.urlopen(req, timeout=timeout) as response:
         final = urlsplit(response.geturl()) if hasattr(response, "geturl") else parsed
-        if final.scheme != "https":
+        if final.scheme != "https" or not final.hostname or final.username or final.password:
             raise ValueError("Redirección fuera de HTTPS")
         data = response.read(2_000_001)
         if len(data) > 2_000_000:
