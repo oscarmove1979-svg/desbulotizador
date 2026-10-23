@@ -12,6 +12,8 @@ async def run():
               "voice_status": "not_attempted", "narrated_video_valid": False,
               "publication_allowed": False}
     try:
+        for stale in ("output/preview_narrated.mp4", "output/voice.mp3"):
+            Path(stale).unlink(missing_ok=True)
         await synthesize()
         status["voice_status"] = "audio_generated"
         add_voice()
