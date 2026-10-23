@@ -10,3 +10,11 @@ class GuardrailsTests(unittest.TestCase):
     def test_publishable_rejected(self):
         with self.assertRaises(ValueError):
             validate_queue({"publication_enabled": False, "items": [{"publishable": True}]})
+
+    def test_non_object_item_rejected(self):
+        with self.assertRaises(ValueError):
+            validate_queue({'publication_enabled':False,'items':[None]})
+
+    def test_non_list_items_rejected(self):
+        with self.assertRaises(ValueError):
+            validate_queue({'publication_enabled':False,'items':{}})
