@@ -10,6 +10,9 @@ def summarize_status(voice, video, metrics):
         "voice_error": voice.get("error_type"),
         "candidates": metrics.get("candidate_count", 0),
         "dossiers": metrics.get("dossier_count", 0),
+        "claims_pending_review": metrics.get("claims_pending_review", 0),
+        "evidence_records": metrics.get("evidence_records", 0),
+        "source_errors": metrics.get("source_errors", 0),
         "verified_claims": 0,
         "youtube_upload_enabled": False,
         "ready_for_publication": False
@@ -27,6 +30,9 @@ if __name__ == "__main__":
              f"- Vídeo narrado válido: {result['video_has_audio']}",
              f"- Candidatos: {result['candidates']}",
              f"- Expedientes: {result['dossiers']}",
+             f"- Afirmaciones pendientes: {result['claims_pending_review']}",
+             f"- Evidencias registradas: {result['evidence_records']}",
+             f"- Errores de fuentes: {result['source_errors']}",
              "- Publicación: BLOQUEADA"]
     import os
     if os.environ.get("GITHUB_STEP_SUMMARY"):
