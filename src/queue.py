@@ -21,6 +21,8 @@ def build_queue(discovery):
     queue = []
     seen = set()
     for raw in discovery.get("candidates", []):
+        if not isinstance(raw, dict):
+            continue
         item = normalize(raw)
         if item and item["id"] not in seen:
             seen.add(item["id"])
