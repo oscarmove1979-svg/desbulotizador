@@ -58,7 +58,7 @@ def discover(feeds=None):
 
 if __name__ == "__main__":
     feeds = [v.strip() for v in os.getenv("RSS_FEEDS", "").split(",") if v.strip()]
-    result = discover(feeds or None)
+    result = discover(feeds if os.getenv('RSS_FEEDS') is not None else None)
     Path("output").mkdir(exist_ok=True)
     Path("output/discovery.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Candidatos: {len(result['candidates'])}; errores: {len(result['errors'])}")
