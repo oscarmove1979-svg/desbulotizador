@@ -2,11 +2,14 @@
 import hashlib
 import json
 from pathlib import Path
+from urllib.parse import urlsplit
 
 def normalize(candidate):
     url = str(candidate.get("url", "")).strip()
     title = str(candidate.get("title", "")).strip()
-    if not url.startswith("https://") or not title:
+    parsed = urlsplit(url)
+    if (parsed.scheme != "https" or not parsed.hostname or parsed.username
+            or parsed.password or not title):
         return None
     return {"id": hashlib.sha256(url.encode()).hexdigest()[:16],
             "title": title[:500], "url": url,
