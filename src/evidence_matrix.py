@@ -5,6 +5,8 @@ from urllib.parse import urlsplit
 def assemble_matrix(claim, sources):
     if not isinstance(claim, str) or not claim.strip():
         raise ValueError("Afirmación obligatoria")
+    if not isinstance(sources, list):
+        raise TypeError("Las fuentes deben ser una lista")
     records = []
     seen = set()
     for source in sources:
