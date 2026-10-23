@@ -26,6 +26,14 @@ class DiscoveryTests(unittest.TestCase):
         result = fetch_feed("https://example.org/atom")
         self.assertEqual(result[0]["title"], "Dato oficial")
 
+    @patch("urllib.request.urlopen")
+    def test_rejects_xml_doctype(self, mocked):
+        response = FakeResponse()
+        response.read = lambda limit: b'<!DOCTYPE rss [<!ENTITY test "unsafe">]><rss/>'
+        mocked.return_value = response
+        with self.assertRaises(ValueError):
+            fetch_feed("https://example.org/feed")
+
     def test_no_http(self):
         with self.assertRaises(ValueError):
             fetch_feed("http://example.org/feed")
