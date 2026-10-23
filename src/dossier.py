@@ -7,7 +7,7 @@ from src.evidence_matrix import assemble_matrix
 
 def build_dossiers(queue):
     dossiers = []
-    for item in queue.get("items", []):
+    for item in (queue.get("items") if isinstance(queue.get("items"), list) else []):
         if not isinstance(item, dict) or item.get("publishable") is not False or item.get("state") != "candidate_unverified":
             continue
         if not isinstance(item.get("id"), str) or not isinstance(item.get("url"), str):
