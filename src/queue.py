@@ -20,7 +20,7 @@ def normalize(candidate):
 def build_queue(discovery):
     queue = []
     seen = set()
-    for raw in discovery.get("candidates", []):
+    for raw in (discovery.get("candidates") or []):
         if not isinstance(raw, dict):
             continue
         item = normalize(raw)
