@@ -38,6 +38,7 @@ jobs:
           python -m pip install edge-tts
           python -m src.tts
           python -m src.mux
+          python -c "from src.quality_gate import inspect_video; print(inspect_video('output/preview_narrated.mp4', require_audio=True))"
       - name: Validar MP4 generado
         run: python -m src.quality_gate
       - name: Registrar métricas del proceso
