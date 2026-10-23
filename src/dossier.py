@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 from src.claim_extraction import extract_claims
 from src.source_registry import classify_source
+from src.evidence_matrix import assemble_matrix
 
 def build_dossiers(queue):
     dossiers = []
@@ -16,6 +17,7 @@ def build_dossiers(queue):
             "source_classification": classify_source(item["url"]),
             "source_title": item["title"],
             "claims": claims,
+            "evidence_matrices": [assemble_matrix(claim, []) for claim in claims],
             "review_status": "awaiting_primary_sources",
             "verdict": None,
             "publication_allowed": False
