@@ -17,6 +17,9 @@ def validate_artifacts(dossiers, voice, report):
     for record in pending:
         if not isinstance(record, dict) or record.get("publication_allowed") is not False or record.get("status") != "unverified":
             raise ValueError("Report claim must remain unverified")
+    count = voice.get("research_claim_count")
+    if count is not None and (type(count) is not int or count != len(pending)):
+        raise ValueError("Narration count mismatch")
     cases = dossiers.get("dossiers", [])
     if not isinstance(cases, list):
         raise ValueError("Dossiers must be a list")
