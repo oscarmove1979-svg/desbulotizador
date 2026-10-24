@@ -24,3 +24,8 @@ class ReviewBoardTests(unittest.TestCase):
         item = dict(status='unverified',publication_allowed=False,claim='<script>2025</script>',source_url='https://example.org')
         board = render_board(dict(publication_allowed=False,pending_claims=[item]))
         self.assertNotIn('<script>', board)
+
+    def test_oversized_claim_rejected(self):
+        item = dict(status='unverified',publication_allowed=False,claim='A' * 2100,source_url='https://example.org')
+        with self.assertRaises(ValueError):
+            render_board(dict(publication_allowed=False,pending_claims=[item]))
