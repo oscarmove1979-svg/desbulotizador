@@ -33,3 +33,7 @@ class SafetyAuditTests(unittest.TestCase):
                                 "publishable": True}]}]},
                 {"public_upload_allowed": False},
                 {"publication_allowed": False})
+
+    def test_voice_editorial_approval_rejected(self):
+        with self.assertRaises(ValueError):
+            validate_artifacts({'publication_allowed':False,'dossiers':[]}, {'public_upload_allowed':False,'editorial_approval':True}, {'publication_allowed':False})
