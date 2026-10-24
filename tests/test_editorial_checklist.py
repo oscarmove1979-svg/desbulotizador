@@ -37,3 +37,8 @@ class EditorialChecklistTests(unittest.TestCase):
         record={"claim":"Dato 2025","source_url":"https://example.org","status":"unverified","publication_allowed":False}
         with self.assertRaises(ValueError):
             build_checklist({"publication_allowed":False,"pending_claims":[record]})
+
+    def test_duplicate_claim_rejected(self):
+        record={"dossier_id":"x","claim":"Dato 2025","source_url":"https://example.org","status":"unverified","publication_allowed":False}
+        with self.assertRaises(ValueError):
+            build_checklist({"publication_allowed":False,"pending_claims":[record,record]})
