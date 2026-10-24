@@ -18,3 +18,11 @@ class PipelineIntegrationTests(unittest.TestCase):
         self.assertEqual(len(report['pending_claims']), 1)
         self.assertIn('NO VERIFICADO', board)
         self.assertFalse(voice['public_upload_allowed'])
+
+    def test_empty_research_flow(self):
+        dossiers = build_dossiers(build_queue({'candidates':[]}))
+        report = build_pipeline_report(dossiers)
+        voice = narration_plan(report)
+        self.assertTrue(validate_artifacts(dossiers, voice, report))
+        self.assertEqual(report['status'], 'no_claims_found')
+        self.assertIn('No hay afirmaciones', render_board(report))
