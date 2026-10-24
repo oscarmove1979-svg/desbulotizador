@@ -36,7 +36,7 @@ def build_pipeline_report(dossiers):
                             "source_url": case.get("source_url"),
                             "status": "unverified",
                             "publication_allowed": False})
-    return {"project": "desBULOtizador", "status": "pending_human_fact_check",
+    return {"project": "desBULOtizador", "status": "pending_human_fact_check" if pending else "no_claims_found",
             "publication_allowed": False, "pending_claims": pending,
             "disclaimer": "Candidatos sin verificación editorial; no son bulos demostrados."}
 
