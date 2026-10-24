@@ -30,6 +30,7 @@ async def run():
         status["editorial_approval"] = False
         status["error_type"] = type(exc).__name__
         status["error_message"] = str(exc)[:300]
+        status["diagnostic_only"] = True
         for partial in ("output/preview_narrated.mp4", "output/voice.mp3"):
             Path(partial).unlink(missing_ok=True)
     finally:
