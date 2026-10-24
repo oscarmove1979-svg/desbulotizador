@@ -5,6 +5,9 @@ from pathlib import Path
 def narration_plan(report):
     if report.get("publication_allowed") is not False:
         raise ValueError("Unsafe report")
+    for record in report.get("pending_claims", []):
+        if not isinstance(record, dict) or record.get("publication_allowed") is not False or record.get("status") != "unverified":
+            raise ValueError("Unsafe research claim")
     return {
         "language": "es-ES",
         "style": "periodismo explicativo, pausado y natural",
