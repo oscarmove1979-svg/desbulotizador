@@ -33,7 +33,7 @@ def build_pipeline_report(dossiers):
             raise ValueError("Invalid dossier claims")
         for claim in claims:
             if not isinstance(claim, dict) or not isinstance(claim.get("text"), str):
-                continue
+                raise ValueError("Invalid claim record")
             pending.append({"dossier_id": case.get("id"),
                             "claim": claim["text"],
                             "source_url": case.get("source_url"),
