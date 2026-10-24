@@ -16,3 +16,8 @@ class MatrixConsistencyTests(unittest.TestCase):
         case = {'publication_allowed':False,'verdict':None,'claims':[None],'evidence_matrices':[{}]}
         with self.assertRaises(ValueError):
             validate_artifacts({'publication_allowed':False,'dossiers':[case]}, {'public_upload_allowed':False}, {'publication_allowed':False})
+
+    def test_invalid_matrix(self):
+        case = dict(publication_allowed=False, verdict=None, claims=[dict(text='Dato 2025',publishable=False,verdict='unverified')], evidence_matrices=[None])
+        with self.assertRaises(ValueError):
+            validate_artifacts(dict(publication_allowed=False,dossiers=[case]), dict(public_upload_allowed=False), dict(publication_allowed=False))
