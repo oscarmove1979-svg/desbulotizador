@@ -25,6 +25,7 @@ def render_board(report):
         parsed = urlsplit(source)
         if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password:
             raise ValueError('Source URL must use HTTPS')
+        source = source.replace('\n', '').replace('\r', '')
         lines.extend(['## Afirmacion pendiente', claim, '', 'Fuente: ' + source, 'Pruebas primarias: pendientes', 'Veredicto: ninguno', ''])
     return '\n'.join(lines) + '\n'
 
