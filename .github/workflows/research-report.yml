@@ -18,10 +18,20 @@ jobs:
           python-version: '3.11'
       - name: Pruebas
         run: python -m unittest discover -s tests -v
+      - name: Recoger candidatos
+        run: python -m src.discovery
+      - name: Construir cola de investigación
+        run: python -m src.queue
+      - name: Preparar expedientes sin veredicto
+        run: python -m src.dossier
       - name: Generar informe sin publicar
         run: python -m src.report
       - uses: actions/upload-artifact@v4
         with:
           name: informe-seguro
-          path: output/report.json
+          path: |
+            output/discovery.json
+            output/queue.json
+            output/dossiers.json
+            output/report.json
           retention-days: 7
