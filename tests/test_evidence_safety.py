@@ -9,3 +9,8 @@ class EvidenceSafetyTests(unittest.TestCase):
         record = {'dossier_id':'one','source_url':'https://example.org','claim':'Dato 2025','status':'unverified','publication_allowed':False}
         with self.assertRaises(ValueError):
             validate_artifacts({'publication_allowed':False,'dossiers':[case]},{'public_upload_allowed':False},{'publication_allowed':False,'pending_claims':[record]})
+
+    def test_rejects_non_list_evidence(self):
+        case = {'publication_allowed':False,'verdict':None,'claims':[],'evidence_matrices':[]}
+        report = {'publication_allowed':False,'pending_claims':[]}
+        self.assertTrue(validate_artifacts({'publication_allowed':False,'dossiers':[case]},{'public_upload_allowed':False},report))
