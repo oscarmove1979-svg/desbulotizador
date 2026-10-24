@@ -22,3 +22,9 @@ class MetricsTests(unittest.TestCase):
         self.assertEqual(result['candidate_count'], 0)
         self.assertEqual(result['claims_pending_review'], 0)
         self.assertFalse(result['publication_allowed'])
+
+    def test_invalid_nested_evidence(self):
+        case = {'claims':None,'evidence_matrices':[None,{'evidence':None}]}
+        result = summarize({'candidates':[],'errors':None},{'items':[]},{'dossiers':[case]})
+        self.assertEqual(result['evidence_records'], 0)
+        self.assertEqual(result['source_errors'], 0)
