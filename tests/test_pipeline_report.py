@@ -11,3 +11,7 @@ class PipelineReportTests(unittest.TestCase):
         sample = dict(id='abc', source_url='https://example.org', claims=[dict(text='Dato 2025')])
         report = build_pipeline_report(dict(dossiers=[sample]))
         self.assertEqual(report['pending_claims'][0]['status'], 'unverified')
+
+    def test_invalid_claim_is_skipped(self):
+        report = build_pipeline_report({'dossiers':[{'claims':[None]}]})
+        self.assertEqual(report['pending_claims'], [])
