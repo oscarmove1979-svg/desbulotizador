@@ -14,3 +14,9 @@ class VoiceTests(unittest.TestCase):
         report = {'publication_allowed':False,'pending_claims':[{'status':'unverified','publication_allowed':True}]}
         with self.assertRaises(ValueError):
             narration_plan(report)
+
+    def test_narration_reflects_pending_count(self):
+        claim = {'status':'unverified','publication_allowed':False}
+        plan = narration_plan({'publication_allowed':False,'pending_claims':[claim,claim]})
+        self.assertIn('2 afirmaciones', plan['script'])
+        self.assertFalse(plan['public_upload_allowed'])
