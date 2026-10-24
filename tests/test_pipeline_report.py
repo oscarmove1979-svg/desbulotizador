@@ -8,7 +8,7 @@ class PipelineReportTests(unittest.TestCase):
         self.assertFalse(report['publication_allowed'])
 
     def test_candidate_report(self):
-        sample = dict(id='abc', source_url='https://example.org', claims=[dict(text='Dato 2025')])
+        sample = dict(id='abc', source_url='https://example.org', claims=[dict(text='Dato 2025',publishable=False,verdict='unverified')])
         report = build_pipeline_report(dict(dossiers=[sample]))
         self.assertEqual(report['pending_claims'][0]['status'], 'unverified')
 
