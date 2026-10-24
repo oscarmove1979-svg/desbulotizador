@@ -71,4 +71,5 @@ jobs:
             output/metrics.json
             output/pipeline_summary.json
             output/report.json
+            output/review_board.md
           retention-days: 7
