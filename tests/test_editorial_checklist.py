@@ -17,3 +17,8 @@ class EditorialChecklistTests(unittest.TestCase):
 
     def test_empty_report(self):
         self.assertEqual(build_checklist({"publication_allowed":False,"pending_claims":[]})["items"],[])
+
+    def test_missing_claim_rejected(self):
+        record={"dossier_id":"x","claim":"","source_url":"https://example.org","status":"unverified","publication_allowed":False}
+        with self.assertRaises(ValueError):
+            build_checklist({"publication_allowed":False,"pending_claims":[record]})
