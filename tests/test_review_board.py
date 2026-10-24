@@ -29,3 +29,8 @@ class ReviewBoardTests(unittest.TestCase):
         item = dict(status='unverified',publication_allowed=False,claim='A' * 2100,source_url='https://example.org')
         with self.assertRaises(ValueError):
             render_board(dict(publication_allowed=False,pending_claims=[item]))
+
+    def test_non_https_source_rejected(self):
+        item = dict(status='unverified',publication_allowed=False,claim='Dato 2025',source_url='http://example.org')
+        with self.assertRaises(ValueError):
+            render_board(dict(publication_allowed=False,pending_claims=[item]))
