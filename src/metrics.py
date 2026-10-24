@@ -4,8 +4,14 @@ from pathlib import Path
 
 def summarize(discovery, queue, dossiers, quality=None):
     candidates = discovery.get("candidates", [])
+    if not isinstance(candidates, list):
+        candidates = []
     queued = queue.get("items", [])
+    if not isinstance(queued, list):
+        queued = []
     cases = dossiers.get("dossiers", [])
+    if not isinstance(cases, list):
+        cases = []
     return {
         "candidate_count": len(candidates),
         "queue_count": len(queued),
