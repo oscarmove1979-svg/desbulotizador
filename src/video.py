@@ -9,6 +9,8 @@ def create_preview(dossiers_path="output/dossiers.json", destination="output/pre
         raise RuntimeError("FFmpeg no disponible")
     data = json.loads(Path(dossiers_path).read_text(encoding="utf-8"))
     count = len(data.get("dossiers", []))
+    if data.get("publication_allowed") is not False:
+        raise ValueError("Publication flag must be false")
     # Vista de diagnóstico, no una pieza editorial publicable.
     output = Path(destination)
     output.parent.mkdir(parents=True, exist_ok=True)
