@@ -38,6 +38,8 @@ jobs:
         run: python -m src.report
       - name: Generar tablero de revision
         run: python -m src.review_board
+      - name: Preparar comprobaciones editoriales humanas
+        run: python -m src.editorial_checklist
       - name: Preparar guion de voz sin sintetizar
         run: python -m src.voice
       - name: Auditar bloqueo editorial de todos los artefactos
@@ -81,4 +83,5 @@ jobs:
             output/pipeline_summary.json
             output/report.json
             output/review_board.md
+            output/editorial_checklist.json
           retention-days: 7
