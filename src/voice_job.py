@@ -23,6 +23,7 @@ async def run():
         if not checked["technical_pass"]:
             raise ValueError("Narrated video failed technical validation")
         status["voice_status"] = "success"
+        status["diagnostic_only"] = True
         status["duration_seconds"] = checked["duration_seconds"]
         status["editorial_approval"] = False
     except Exception as exc:
