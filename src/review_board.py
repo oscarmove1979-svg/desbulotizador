@@ -9,6 +9,8 @@ def render_board(report):
     if not isinstance(records, list):
         raise ValueError('Invalid records')
     lines = ['# desBULOtizador: revision editorial', '', 'NO VERIFICADO - PUBLICACION BLOQUEADA', '']
+    if not records:
+        lines.append('No hay afirmaciones pendientes en esta ejecucion.')
     for record in records:
         if not isinstance(record, dict) or record.get('status') != 'unverified' or record.get('publication_allowed') is not False:
             raise ValueError('Unsafe candidate')
