@@ -38,3 +38,10 @@ class TTSTests(unittest.IsolatedAsyncioTestCase):
                 with self.assertRaises(RuntimeError):
                     await synthesize(str(p), str(audio))
             self.assertFalse(audio.exists())
+
+    async def test_editorial_flag(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d) / 'plan.json'
+            p.write_text(json.dumps({'public_upload_allowed':False,'editorial_approval':True,'script':'hola'}))
+            with self.assertRaises(ValueError):
+                await synthesize(str(p), str(Path(d) / 'voice.mp3'))
