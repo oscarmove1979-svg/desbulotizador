@@ -20,6 +20,8 @@ def render_board(report):
         if not isinstance(claim, str) or not claim.strip():
             raise ValueError('Missing claim text')
         claim = html.escape(' '.join(claim.split()))
+        if len(claim) > 2000:
+            raise ValueError('Claim exceeds display limit')
         source = record.get('source_url')
         if not isinstance(source, str):
             raise ValueError('Invalid source URL')
