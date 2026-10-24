@@ -26,6 +26,8 @@ def validate_artifacts(dossiers, voice, report):
         if len(claims) != len(matrices):
             raise ValueError("Every claim requires one evidence matrix")
         for claim in claims:
+            if not isinstance(claim, dict):
+                raise ValueError("Invalid claim object")
             if claim.get("publishable") is not False or claim.get("verdict") != "unverified":
                 raise ValueError("Candidate claims must remain unverified")
         for claim, matrix in zip(claims, matrices):
