@@ -12,13 +12,16 @@ def summarize(discovery, queue, dossiers, quality=None):
     cases = dossiers.get("dossiers", [])
     if not isinstance(cases, list):
         cases = []
+    errors = discovery.get("errors", [])
+    if not isinstance(errors, list):
+        errors = []
     return {
         "candidate_count": len(candidates),
         "queue_count": len(queued),
         "dossier_count": len(cases),
         "claims_pending_review": sum(len(case.get("claims", [])) for case in cases if isinstance(case, dict) and isinstance(case.get("claims", []), list)),
         "evidence_records": sum(len(matrix.get("evidence", [])) if isinstance(matrix.get("evidence", []), list) else 0 for case in cases if isinstance(case, dict) for matrix in (case.get("evidence_matrices") if isinstance(case.get("evidence_matrices"), list) else []) if isinstance(matrix, dict)),
-        "source_errors": len(discovery.get("errors", [])),
+        "source_errors": len(errors),
         "verified_bulos": 0,
         "videos_published": 0,
         "technical_video_ok": bool((quality or {}).get("technical_pass", False)),
