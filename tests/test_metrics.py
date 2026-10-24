@@ -16,3 +16,9 @@ class MetricsTests(unittest.TestCase):
         self.assertEqual(result["claims_pending_review"], 1)
         self.assertEqual(result["evidence_records"], 1)
         self.assertEqual(result["verified_bulos"], 0)
+
+    def test_invalid_collections_do_not_crash(self):
+        result = summarize({'candidates':None,'errors':[]}, {'items':None}, {'dossiers':None})
+        self.assertEqual(result['candidate_count'], 0)
+        self.assertEqual(result['claims_pending_review'], 0)
+        self.assertFalse(result['publication_allowed'])
