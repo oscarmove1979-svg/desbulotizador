@@ -21,3 +21,8 @@ class MatrixConsistencyTests(unittest.TestCase):
         case = dict(publication_allowed=False, verdict=None, claims=[dict(text='Dato 2025',publishable=False,verdict='unverified')], evidence_matrices=[None])
         with self.assertRaises(ValueError):
             validate_artifacts(dict(publication_allowed=False,dossiers=[case]), dict(public_upload_allowed=False), dict(publication_allowed=False))
+
+    def test_report_claim_cannot_be_publishable(self):
+        report = {'publication_allowed':False,'pending_claims':[{'status':'unverified','publication_allowed':True}]}
+        with self.assertRaises(ValueError):
+            validate_artifacts({'publication_allowed':False,'dossiers':[]}, {'public_upload_allowed':False}, report)
