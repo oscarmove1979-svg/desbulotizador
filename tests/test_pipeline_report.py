@@ -18,3 +18,7 @@ class PipelineReportTests(unittest.TestCase):
 
     def test_empty_status(self):
         self.assertEqual(build_pipeline_report({'dossiers':[]})['status'], 'no_claims_found')
+
+    def test_invalid_claim_collection_is_rejected(self):
+        with self.assertRaises(ValueError):
+            build_pipeline_report({'dossiers':[{'claims':None}]})
