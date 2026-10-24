@@ -22,3 +22,8 @@ class PipelineReportTests(unittest.TestCase):
     def test_invalid_claim_collection_is_rejected(self):
         with self.assertRaises(ValueError):
             build_pipeline_report({'dossiers':[{'claims':None}]})
+
+    def test_unsafe_claim(self):
+        item = dict(text='Dato 2025',publishable=True,verdict='unverified')
+        with self.assertRaises(ValueError):
+            build_pipeline_report(dict(dossiers=[dict(claims=[item])]))
