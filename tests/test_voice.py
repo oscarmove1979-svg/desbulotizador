@@ -20,3 +20,9 @@ class VoiceTests(unittest.TestCase):
         plan = narration_plan({'publication_allowed':False,'pending_claims':[claim,claim]})
         self.assertIn('2 afirmaciones', plan['script'])
         self.assertFalse(plan['public_upload_allowed'])
+
+    def test_empty_research_narration(self):
+        plan = narration_plan({'publication_allowed':False,'pending_claims':[]})
+        self.assertEqual(plan['research_claim_count'], 0)
+        self.assertIn('No se han encontrado', plan['script'])
+        self.assertFalse(plan['editorial_approval'])
