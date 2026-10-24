@@ -32,6 +32,8 @@ def build_checklist(report):
         if (parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password
                 or any(ord(ch) < 32 or ord(ch) == 127 for ch in source)):
             raise ValueError("Checklist source must use HTTPS")
+        if not isinstance(record.get("dossier_id"), str) or not record["dossier_id"].strip():
+            raise ValueError("Missing dossier identifier")
         result.append({"dossier_id":record.get("dossier_id"),"claim":record.get("claim"),"source_url":record.get("source_url"),"questions":[{"question":q,"checked":False} for q in QUESTIONS],"human_approval":False,"verdict":None,"publication_allowed":False})
     return {"project":"desBULOtizador","items":result,"publication_allowed":False,"automated_verdict":False}
 
