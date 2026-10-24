@@ -31,7 +31,7 @@ def fetch_feed(url, timeout=12):
     for item in root.findall(".//item")[:20]:
         title = (item.findtext("title") or "").strip()
         link = (item.findtext("link") or "").strip()
-        if title and urlsplit(link).scheme == "https" and urlsplit(link).hostname and not urlsplit(link).username:
+        if title and urlsplit(link).scheme == "https" and urlsplit(link).hostname and not urlsplit(link).username and not urlsplit(link).password:
             items.append({"title": title, "url": link, "feed": url})
     atom = "{http://www.w3.org/2005/Atom}"
     for entry in root.findall(f".//{atom}entry")[:20]:
