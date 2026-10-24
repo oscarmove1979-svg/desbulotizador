@@ -47,7 +47,7 @@ def validate_artifacts(dossiers, voice, report):
                 raise ValueError("Evidence matrix must remain unverified")
     expected = [(case.get("id"), case.get("source_url"), claim.get("text")) for case in cases for claim in case.get("claims", [])]
     actual = [(record.get("dossier_id"), record.get("source_url"), record.get("claim")) for record in pending]
-    if sorted(map(str, expected)) != sorted(map(str, actual)):
+    if sorted(expected, key=repr) != sorted(actual, key=repr):
         raise ValueError("Report claims differ from research dossiers")
     return True
 
