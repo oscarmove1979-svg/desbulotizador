@@ -9,3 +9,8 @@ class VoiceTests(unittest.TestCase):
     def test_unsafe_report(self):
         with self.assertRaises(ValueError):
             narration_plan({"publication_allowed": True})
+
+    def test_unsafe_pending_claim(self):
+        report = {'publication_allowed':False,'pending_claims':[{'status':'unverified','publication_allowed':True}]}
+        with self.assertRaises(ValueError):
+            narration_plan(report)
