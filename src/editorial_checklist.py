@@ -29,7 +29,8 @@ def build_checklist(report):
         if not isinstance(source, str):
             raise ValueError("Missing source URL")
         parsed = urlsplit(source)
-        if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+        if (parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password
+                or any(ord(ch) < 32 or ord(ch) == 127 for ch in source)):
             raise ValueError("Checklist source must use HTTPS")
         result.append({"dossier_id":record.get("dossier_id"),"claim":record.get("claim"),"source_url":record.get("source_url"),"questions":[{"question":q,"checked":False} for q in QUESTIONS],"human_approval":False,"verdict":None,"publication_allowed":False})
     return {"project":"desBULOtizador","items":result,"publication_allowed":False,"automated_verdict":False}
