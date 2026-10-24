@@ -29,6 +29,8 @@ def build_pipeline_report(dossiers):
         if not isinstance(case, dict):
             raise ValueError("Invalid dossier")
         for claim in (case.get("claims") if isinstance(case.get("claims"), list) else []):
+            if not isinstance(claim, dict) or not isinstance(claim.get("text"), str):
+                continue
             pending.append({"dossier_id": case.get("id"),
                             "claim": claim["text"],
                             "source_url": case.get("source_url"),
