@@ -11,11 +11,16 @@ def narration_plan(report):
     for record in pending:
         if not isinstance(record, dict) or record.get("publication_allowed") is not False or record.get("status") != "unverified":
             raise ValueError("Unsafe research claim")
+    count = len(pending)
+    script = ("desBULOtizador. Se han detectado " + str(count) +
+              " afirmaciones para investigar. Ninguna ha sido verificada y "
+              "no se publicará ningún desmentido sin comprobar las fuentes."
+              if count else "desBULOtizador. No se han encontrado afirmaciones "
+              "para investigar en esta ejecución. Esta es una prueba técnica.")
     return {
         "language": "es-ES",
         "style": "periodismo explicativo, pausado y natural",
-        "script": "desBULOtizador. Esta es una demostración técnica. "
-                  "Todavía no se ha verificado ninguna afirmación política.",
+        "script": script,
         "voice_generated": False,
         "public_upload_allowed": False
     }
