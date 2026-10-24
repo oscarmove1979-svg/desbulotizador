@@ -24,7 +24,7 @@ def build_checklist(report):
     for record in records:
         if not isinstance(record, dict) or record.get("status") != "unverified" or record.get("publication_allowed") is not False:
             raise ValueError("Unsafe research item")
-        if not isinstance(record.get("claim"), str) or not record["claim"].strip():
+        if not isinstance(record.get("claim"), str) or not record["claim"].strip() or len(record["claim"]) > 2000:
             raise ValueError("Missing claim text")
         source = record.get("source_url")
         if not isinstance(source, str):
