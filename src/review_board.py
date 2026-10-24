@@ -1,5 +1,6 @@
 """Human-readable queue of unverified research candidates."""
 import json
+import html
 from urllib.parse import urlsplit
 from pathlib import Path
 
@@ -18,7 +19,7 @@ def render_board(report):
         claim = record.get('claim')
         if not isinstance(claim, str) or not claim.strip():
             raise ValueError('Missing claim text')
-        claim = ' '.join(claim.split())
+        claim = html.escape(' '.join(claim.split()))
         source = record.get('source_url')
         if not isinstance(source, str):
             raise ValueError('Invalid source URL')
