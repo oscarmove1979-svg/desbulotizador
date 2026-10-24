@@ -20,6 +20,7 @@ def build_checklist(report):
     if not isinstance(records, list):
         raise ValueError("Invalid pending claims")
     result = []
+    seen = set()
     for record in records:
         if not isinstance(record, dict) or record.get("status") != "unverified" or record.get("publication_allowed") is not False:
             raise ValueError("Unsafe research item")
@@ -34,6 +35,10 @@ def build_checklist(report):
             raise ValueError("Checklist source must use HTTPS")
         if not isinstance(record.get("dossier_id"), str) or not record["dossier_id"].strip():
             raise ValueError("Missing dossier identifier")
+        identity = (record["dossier_id"], record["claim"], source)
+        if identity in seen:
+            raise ValueError("Duplicate editorial checklist item")
+        seen.add(identity)
         result.append({"dossier_id":record.get("dossier_id"),"claim":record.get("claim"),"source_url":record.get("source_url"),"questions":[{"question":q,"checked":False} for q in QUESTIONS],"human_approval":False,"verdict":None,"publication_allowed":False})
     return {"project":"desBULOtizador","items":result,"publication_allowed":False,"automated_verdict":False}
 
