@@ -9,3 +9,8 @@ class ReviewBoardTests(unittest.TestCase):
     def test_reject_unsafe_candidate(self):
         with self.assertRaises(ValueError):
             render_board({'publication_allowed':False,'pending_claims':[{'status':'unverified','publication_allowed':True}]})
+
+    def test_embedded_linebreaks_are_removed(self):
+        item = dict(status='unverified',publication_allowed=False,claim='Dato 2025\ntexto',source_url='https://example.org\n')
+        board = render_board(dict(publication_allowed=False,pending_claims=[item]))
+        self.assertIn('Dato 2025 texto', board)
