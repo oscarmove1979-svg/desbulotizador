@@ -10,7 +10,7 @@ class EvidenceSafetyTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_artifacts({'publication_allowed':False,'dossiers':[case]},{'public_upload_allowed':False},{'publication_allowed':False,'pending_claims':[record]})
 
-    def test_rejects_non_list_evidence(self):
+    def test_empty_evidence_case_passes(self):
         case = {'publication_allowed':False,'verdict':None,'claims':[],'evidence_matrices':[]}
         report = {'publication_allowed':False,'pending_claims':[]}
         self.assertTrue(validate_artifacts({'publication_allowed':False,'dossiers':[case]},{'public_upload_allowed':False},report))
