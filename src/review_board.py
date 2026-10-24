@@ -14,7 +14,9 @@ def render_board(report):
     for record in records:
         if not isinstance(record, dict) or record.get('status') != 'unverified' or record.get('publication_allowed') is not False:
             raise ValueError('Unsafe candidate')
-        lines.extend(['## Afirmacion pendiente', str(record.get('claim', '')), '', 'Fuente: ' + str(record.get('source_url', '')), 'Pruebas primarias: pendientes', 'Veredicto: ninguno', ''])
+        claim = str(record.get('claim', '')).replace('\n', ' ').replace('\r', ' ').strip()
+        source = str(record.get('source_url', '')).replace('\n', '').replace('\r', '').strip()
+        lines.extend(['## Afirmacion pendiente', claim, '', 'Fuente: ' + source, 'Pruebas primarias: pendientes', 'Veredicto: ninguno', ''])
     return '\n'.join(lines) + '\n'
 
 if __name__ == '__main__':
