@@ -15,7 +15,10 @@ def render_board(report):
     for record in records:
         if not isinstance(record, dict) or record.get('status') != 'unverified' or record.get('publication_allowed') is not False:
             raise ValueError('Unsafe candidate')
-        claim = str(record.get('claim', '')).replace('\n', ' ').replace('\r', ' ').strip()
+        claim = record.get('claim')
+        if not isinstance(claim, str) or not claim.strip():
+            raise ValueError('Missing claim text')
+        claim = ' '.join(claim.split())
         source = record.get('source_url')
         if not isinstance(source, str):
             raise ValueError('Invalid source URL')
