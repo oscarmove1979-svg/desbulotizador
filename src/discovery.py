@@ -41,7 +41,8 @@ def fetch_feed(url, timeout=12):
                      if node.get("rel", "alternate") == "alternate"
                      and urlsplit(node.get("href", "")).scheme == "https"
                      and urlsplit(node.get("href", "")).hostname
-                     and not urlsplit(node.get("href", "")).username), "")
+                     and not urlsplit(node.get("href", "")).username
+                     and not urlsplit(node.get("href", "")).password), "")
         if title and link:
             items.append({"title": title, "url": link, "feed": url})
     return items
