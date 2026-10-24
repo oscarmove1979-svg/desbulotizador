@@ -13,8 +13,8 @@ class PipelineReportTests(unittest.TestCase):
         self.assertEqual(report['pending_claims'][0]['status'], 'unverified')
 
     def test_invalid_claim_is_skipped(self):
-        report = build_pipeline_report({'dossiers':[{'claims':[None]}]})
-        self.assertEqual(report['pending_claims'], [])
+        with self.assertRaises(ValueError):
+            build_pipeline_report({'dossiers':[{'claims':[None]}]})
 
     def test_empty_status(self):
         self.assertEqual(build_pipeline_report({'dossiers':[]})['status'], 'no_claims_found')
