@@ -32,3 +32,8 @@ class EditorialChecklistTests(unittest.TestCase):
         record={"dossier_id":"x","claim":"Dato 2025","source_url":"https://example.org/\nmalicious","status":"unverified","publication_allowed":False}
         with self.assertRaises(ValueError):
             build_checklist({"publication_allowed":False,"pending_claims":[record]})
+
+    def test_missing_dossier_id_rejected(self):
+        record={"claim":"Dato 2025","source_url":"https://example.org","status":"unverified","publication_allowed":False}
+        with self.assertRaises(ValueError):
+            build_checklist({"publication_allowed":False,"pending_claims":[record]})
