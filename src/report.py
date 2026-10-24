@@ -32,7 +32,7 @@ def build_pipeline_report(dossiers):
         if not isinstance(claims, list):
             raise ValueError("Invalid dossier claims")
         for claim in claims:
-            if not isinstance(claim, dict) or not isinstance(claim.get("text"), str):
+            if not isinstance(claim, dict) or not isinstance(claim.get("text"), str) or not claim["text"].strip():
                 raise ValueError("Invalid claim record")
             if claim.get("publishable") is not False or claim.get("verdict") != "unverified":
                 raise ValueError("Claim cannot be included as verified")
