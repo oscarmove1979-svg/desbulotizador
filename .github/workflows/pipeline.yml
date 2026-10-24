@@ -44,6 +44,12 @@ jobs:
         run: python -m src.voice
       - name: Auditar bloqueo editorial de todos los artefactos
         run: python -m src.safety_audit
+      - name: Instalar FFmpeg para renderizado y validación
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version
+          ffprobe -version
       - name: Generar vídeo diagnóstico sin narración
         run: python -m src.video
       - name: Instalar sintetizador de voz experimental
