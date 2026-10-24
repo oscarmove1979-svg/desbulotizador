@@ -11,3 +11,8 @@ class MatrixConsistencyTests(unittest.TestCase):
         dossier = {'publication_allowed': False, 'verdict': None, 'claims': [{'text':'2025 data','verdict':'unverified','publishable':False}], 'evidence_matrices': [{'claim':'other text','publication_allowed':False,'verdict':None}]}
         with self.assertRaises(ValueError):
             validate_artifacts({'publication_allowed':False,'dossiers':[dossier]}, {'public_upload_allowed':False}, {'publication_allowed':False})
+
+    def test_invalid_claim_object(self):
+        case = {'publication_allowed':False,'verdict':None,'claims':[None],'evidence_matrices':[{}]}
+        with self.assertRaises(ValueError):
+            validate_artifacts({'publication_allowed':False,'dossiers':[case]}, {'public_upload_allowed':False}, {'publication_allowed':False})
