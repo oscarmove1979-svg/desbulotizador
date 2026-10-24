@@ -7,6 +7,8 @@ def validate_artifacts(dossiers, voice, report):
         raise ValueError("Dossier publication flag must be false")
     if voice.get("public_upload_allowed") is not False:
         raise ValueError("Voice publication flag must be false")
+    if voice.get("editorial_approval", False) is not False:
+        raise ValueError("Voice editorial approval must be false")
     if report.get("publication_allowed") is not False:
         raise ValueError("Report publication flag must be false")
     pending = report.get("pending_claims", [])
