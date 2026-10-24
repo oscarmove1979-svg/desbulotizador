@@ -39,6 +39,7 @@ def fetch_feed(url, timeout=12):
         links = entry.findall(f"{atom}link")
         link = next((node.get("href", "") for node in links
                      if node.get("rel", "alternate") == "alternate"
+                     and not any(ord(ch) < 32 or ord(ch) == 127 for ch in node.get("href", ""))
                      and len(node.get("href", "")) <= 2048
                      and urlsplit(node.get("href", "")).scheme == "https"
                      and urlsplit(node.get("href", "")).hostname
