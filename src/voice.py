@@ -23,6 +23,7 @@ def narration_plan(report):
         "script": script,
         "voice_generated": False,
         "editorial_approval": False,
+        "research_claim_count": count,
         "public_upload_allowed": False
     }
 
