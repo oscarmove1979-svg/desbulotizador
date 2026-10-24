@@ -26,3 +26,8 @@ class MatrixConsistencyTests(unittest.TestCase):
         report = {'publication_allowed':False,'pending_claims':[{'status':'unverified','publication_allowed':True}]}
         with self.assertRaises(ValueError):
             validate_artifacts({'publication_allowed':False,'dossiers':[]}, {'public_upload_allowed':False}, report)
+
+    def test_report_must_match_dossier_claims(self):
+        case = {'id':'abc','publication_allowed':False,'verdict':None,'claims':[{'text':'Dato 2025','publishable':False,'verdict':'unverified'}],'evidence_matrices':[{'claim':'Dato 2025','publication_allowed':False,'verdict':None}]}
+        with self.assertRaises(ValueError):
+            validate_artifacts({'publication_allowed':False,'dossiers':[case]}, {'public_upload_allowed':False}, {'publication_allowed':False,'pending_claims':[]})
