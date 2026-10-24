@@ -19,7 +19,8 @@ def inspect_video(path, require_audio=False):
     if require_audio and not has_audio:
         raise ValueError("Narration audio missing")
     return {"technical_pass": True, "has_audio": has_audio, "editorial_pass": False,
-            "public_upload_allowed": False, "duration_seconds": duration}
+            "public_upload_allowed": False, "diagnostic_only": True,
+            "duration_seconds": duration}
 
 if __name__ == "__main__":
     result = inspect_video("output/preview.mp4")
