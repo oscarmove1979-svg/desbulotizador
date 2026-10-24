@@ -36,3 +36,7 @@ class MatrixConsistencyTests(unittest.TestCase):
         case = dict(id='abc',source_url='https://example.org',publication_allowed=False,verdict=None,claims=[dict(text='Dato 2025',publishable=False,verdict='unverified')],evidence_matrices=[dict(claim='Dato 2025',publication_allowed=False,verdict=None)])
         record = dict(dossier_id='abc',source_url='https://example.org',claim='Dato 2025',status='unverified',publication_allowed=False)
         self.assertTrue(validate_artifacts(dict(publication_allowed=False,dossiers=[case]),dict(public_upload_allowed=False),dict(publication_allowed=False,pending_claims=[record])))
+
+    def test_voice_count_mismatch(self):
+        with self.assertRaises(ValueError):
+            validate_artifacts(dict(publication_allowed=False,dossiers=[]),dict(public_upload_allowed=False,research_claim_count=1),dict(publication_allowed=False,pending_claims=[]))
