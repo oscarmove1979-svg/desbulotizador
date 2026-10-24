@@ -14,3 +14,8 @@ class ReviewBoardTests(unittest.TestCase):
         item = dict(status='unverified',publication_allowed=False,claim='Dato 2025\ntexto',source_url='https://example.org\n')
         board = render_board(dict(publication_allowed=False,pending_claims=[item]))
         self.assertIn('Dato 2025 texto', board)
+
+    def test_missing_claim_rejected(self):
+        record = dict(status='unverified',publication_allowed=False,claim='',source_url='https://example.org')
+        with self.assertRaises(ValueError):
+            render_board(dict(publication_allowed=False,pending_claims=[record]))
