@@ -10,7 +10,8 @@ from src.quality_gate import inspect_video
 async def run():
     status = {"attempted_at": datetime.now(timezone.utc).isoformat(),
               "voice_status": "not_attempted", "narrated_video_valid": False,
-              "publication_allowed": False, "editorial_approval": False}
+              "publication_allowed": False, "editorial_approval": False,
+              "diagnostic_only": True}
     try:
         for stale in ("output/preview_narrated.mp4", "output/voice.mp3"):
             Path(stale).unlink(missing_ok=True)
