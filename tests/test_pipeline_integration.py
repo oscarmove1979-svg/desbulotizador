@@ -26,3 +26,8 @@ class PipelineIntegrationTests(unittest.TestCase):
         self.assertTrue(validate_artifacts(dossiers, voice, report))
         self.assertEqual(report['status'], 'no_claims_found')
         self.assertIn('No hay afirmaciones', render_board(report))
+
+    def test_duplicate_source_is_queued_once(self):
+        item = dict(title='Datos publicados en 2025',url='https://example.org/data')
+        queue = build_queue(dict(candidates=[item,item]))
+        self.assertEqual(len(queue['items']), 1)
