@@ -9,6 +9,8 @@ def create_preview(dossiers_path="output/dossiers.json", destination="output/pre
         raise RuntimeError("FFmpeg no disponible")
     data = json.loads(Path(dossiers_path).read_text(encoding="utf-8"))
     count = len(data.get("dossiers", []))
+    if any(case.get("verdict") is not None for case in data["dossiers"]):
+        raise ValueError("Diagnostic render cannot include factual verdicts")
     if not all(isinstance(case, dict) and case.get("publication_allowed") is False for case in data["dossiers"]):
         raise ValueError("Unsafe research dossier")
     if not isinstance(data.get("dossiers"), list):
