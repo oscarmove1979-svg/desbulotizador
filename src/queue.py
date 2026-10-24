@@ -7,8 +7,14 @@ from urllib.parse import urlsplit
 def normalize(candidate):
     if not isinstance(candidate, dict):
         return None
-    url = str(candidate.get("url", "")).strip()
-    title = str(candidate.get("title", "")).strip()
+    url = candidate.get("url")
+    title = candidate.get("title")
+    if not isinstance(url, str) or not isinstance(title, str):
+        return None
+    url = url.strip()
+    title = title.strip()
+    if len(url) > 2048 or any(ord(ch) < 32 or ord(ch) == 127 for ch in url):
+        return None
     parsed = urlsplit(url)
     if (parsed.scheme != "https" or not parsed.hostname or parsed.username
             or parsed.password or not title):
