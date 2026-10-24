@@ -48,6 +48,18 @@ def validate_artifacts(dossiers, voice, report):
                 raise ValueError("Evidence matrix claim does not match")
             if matrix.get("publication_allowed") is not False or matrix.get("verdict") is not None:
                 raise ValueError("Evidence matrix must remain unverified")
+    for case in cases:
+        for matrix in case.get("evidence_matrices", []):
+            evidence = matrix.get("evidence", [])
+            if not isinstance(evidence, list):
+                raise ValueError("Invalid evidence list")
+            for entry in evidence:
+                if not isinstance(entry, dict):
+                    raise ValueError("Invalid evidence record")
+                if entry.get("human_reviewed", False) is not False:
+                    raise ValueError("Unapproved evidence review")
+                if entry.get("supports_claim") is not None or entry.get("contradicts_claim") is not None:
+                    raise ValueError("Unapproved evidence verdict")
     expected = [(case.get("id"), case.get("source_url"), claim.get("text")) for case in cases for claim in case.get("claims", [])]
     actual = [(record.get("dossier_id"), record.get("source_url"), record.get("claim")) for record in pending]
     if len(expected) != len(actual) or sorted(expected, key=repr) != sorted(actual, key=repr):
