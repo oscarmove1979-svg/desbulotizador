@@ -22,6 +22,7 @@ def narration_plan(report):
         "style": "periodismo explicativo, pausado y natural",
         "script": script,
         "voice_generated": False,
+        "editorial_approval": False,
         "public_upload_allowed": False
     }
 
