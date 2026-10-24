@@ -9,6 +9,12 @@ def validate_artifacts(dossiers, voice, report):
         raise ValueError("Voice publication flag must be false")
     if report.get("publication_allowed") is not False:
         raise ValueError("Report publication flag must be false")
+    pending = report.get("pending_claims", [])
+    if not isinstance(pending, list):
+        raise ValueError("Invalid report claims")
+    for record in pending:
+        if not isinstance(record, dict) or record.get("publication_allowed") is not False or record.get("status") != "unverified":
+            raise ValueError("Report claim must remain unverified")
     cases = dossiers.get("dossiers", [])
     if not isinstance(cases, list):
         raise ValueError("Dossiers must be a list")
