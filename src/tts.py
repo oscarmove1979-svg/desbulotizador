@@ -7,6 +7,8 @@ async def synthesize(plan_path="output/voice_plan.json", audio_path="output/voic
     plan = json.loads(Path(plan_path).read_text(encoding="utf-8"))
     if plan.get("public_upload_allowed") is not False:
         raise ValueError("La publicación debe estar bloqueada")
+    if plan.get("editorial_approval", False) is not False:
+        raise ValueError("Aprobación editorial no permitida")
     script = plan.get("script", "").strip()
     if not script or len(script) > 2000:
         raise ValueError("Guion vacío o excesivo")
