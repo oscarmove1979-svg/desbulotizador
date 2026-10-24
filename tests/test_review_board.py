@@ -19,3 +19,8 @@ class ReviewBoardTests(unittest.TestCase):
         record = dict(status='unverified',publication_allowed=False,claim='',source_url='https://example.org')
         with self.assertRaises(ValueError):
             render_board(dict(publication_allowed=False,pending_claims=[record]))
+
+    def test_escapes_markup(self):
+        item = dict(status='unverified',publication_allowed=False,claim='<script>2025</script>',source_url='https://example.org')
+        board = render_board(dict(publication_allowed=False,pending_claims=[item]))
+        self.assertNotIn('<script>', board)
