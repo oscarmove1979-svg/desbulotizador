@@ -16,7 +16,7 @@ def summarize(discovery, queue, dossiers, quality=None):
         "candidate_count": len(candidates),
         "queue_count": len(queued),
         "dossier_count": len(cases),
-        "claims_pending_review": sum(len(case.get("claims", [])) for case in cases),
+        "claims_pending_review": sum(len(case.get("claims", [])) for case in cases if isinstance(case, dict)),
         "evidence_records": sum(len(matrix.get("evidence", [])) for case in cases for matrix in case.get("evidence_matrices", [])),
         "source_errors": len(discovery.get("errors", [])),
         "verified_bulos": 0,
