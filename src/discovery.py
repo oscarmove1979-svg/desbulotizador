@@ -13,7 +13,8 @@ DEFAULT_FEEDS = [
 
 def fetch_feed(url, timeout=12):
     parsed = urlsplit(url)
-    if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+    if (parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password
+            or any(ord(ch) < 32 or ord(ch) == 127 for ch in url)):
         raise ValueError("URL HTTPS válida requerida")
     req = urllib.request.Request(url, headers={"User-Agent": "desBULOtizador/0.1 (research prototype)"})
     with urllib.request.urlopen(req, timeout=timeout) as response:
